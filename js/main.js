@@ -138,7 +138,7 @@ var vegrest = L.geoJson(vegrest, {
         return L.marker(latlng, { icon: logo_vegerest,title: "Vegetarian options" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        layer.bindPopup(<b>feature.properties.name</b>);
 
         layer.on({
             mouseover: highlightFeature,
@@ -325,29 +325,34 @@ recycling.addTo(map);
 
 //the variable features lists layers that I want to control with the layer control
 
-var cafeAndRestaurants = {
-    "<img src='css/images/logo_vegerest.png' width='23' height='23'> Restaurants with vegetarian options": vegrest,
-    "<img src='css/images/logo_vegrest.png' width='23' height='23'> Restaurants with vegan options": veganrest,
-    "<img src='css/images/logo_vegonly.png' width='23' height='23'> Restaurants 100% meatless": vegonly,
-    "<img src='css/images/logo_vegcafe.png' width='23' height='23'> Vegan cafes": vegancafe
-};
-var shopping = {
-    "<img src='css/images/logo_shopping.png' width='23' height='23'> Marketplaces": marketplace,
-	"<img src='css/images/logo_shopping.png' width='23' height='23'> Organic stores": organicstore,
-    "<img src='css/images/logo_secondhand.png' width='23' height='23'> Second hand stores": secondhand
+//the variable features lists layers that I want to control with the layer control
+var groupedOverlays = {
+    "Restaurants & Cafes": {
+        "<img src='css/images/logo_vegerest.png' width='23' height='23'> Restaurants with vegetarian options": vegrest,
+        "<img src='css/images/logo_vegrest.png' width='23' height='23'> Restaurants with vegan options": veganrest,
+        "<img src='css/images/logo_vegonly.png' width='23' height='23'> Restaurants 100% meatless": vegonly,
+        "<img src='css/images/logo_vegcafe.png' width='23' height='23'> Vegan cafes": vegancafe
+    },
+    "Shopping": {
+        "<img src='css/images/logo_shopping.png' width='23' height='23'> Marketplaces": marketplace,
+        "<img src='css/images/logo_shopping.png' width='23' height='23'> Organic stores": organicstore,
+        "<img src='css/images/logo_secondhand.png' width='23' height='23'> Second hand stores": secondhand
+    },
+    "Recycling": {
+        "<img src='css/images/logo_recycle1.png' width='23' height='23'> Recycling station": recycling
+    }
 };
 
-var recycling = {
-    "<img src='css/images/logo_recycle1.png' width='23' height='23'> Recycling station": recycling
+var options = {
+    groupCheckboxes: true,  // Checkboxen für Gruppen erlauben
+    position: 'bottomright', // Position der Kontrolle
+    collapsed: false        // Standardmäßig nicht eingeklappt
 };
-//the legend uses the layer control with entries for the base maps and two of the layers we added
-//in case either base maps or features are not used in the layer control, the respective element in the properties is null
 
-L.control.groupedLayers(baseMaps, {
-    "Restaurants & Cafes": cafeAndRestaurants,
-	"Shopping":shopping,
-    "Recycling": recycling
-}, { position: 'bottomright' }).addTo(map);
+// Erstelle die grouped Layers-Control mit angepassten Optionen
+var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
+map.addControl(layerControl);
+
 
 
 
