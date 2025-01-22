@@ -573,7 +573,7 @@ vegrest = {
         "outdoor_seating": "yes",
         "phone": "+43 0662 874216",
         "toilets:wheelchair": "no",
-        "website": "https://asia.mrwenasiafood.com/f",
+        "website": "https://asia.mrwenasiafood.com/",
         "wheelchair": "yes"
       },
       "geometry": {

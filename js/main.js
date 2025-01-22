@@ -46,7 +46,7 @@ L.control.scale({position:'bottomright',imperial:false}).addTo(map);
 
 //Marker
 
-var iconSize = [36, 36];
+var iconSize = [38, 38];
 
 //1.Restaurants & Cafes
 //1.1 Vegan restaurants	
@@ -135,10 +135,35 @@ function zoomToFeature(e) {
 
 var vegrest = L.geoJson(vegrest, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_vegerest,title: "Vegetarian options" });
+        return L.marker(latlng, { icon: logo_vegerest, title: "Vegetarian options" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup(<b>feature.properties.name</b>);
+        // Hilfsfunktion zur Formatierung der gesamten Zeile (Label + Wert)
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties.phone) + "<br>" + "<br>" +
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" +
+                        formatProperty("Indoor seating", feature.properties.indoor_seating) + "<br>" +
+                        formatProperty("Outdoor seating", feature.properties.outdoor_seating));
 
         layer.on({
             mouseover: highlightFeature,
@@ -151,6 +176,8 @@ var vegrest = L.geoJson(vegrest, {
     }
 });
 
+
+
 vegrest.addTo(map);
 
 //1.2 Vegan restaurants
@@ -159,7 +186,31 @@ var veganrest = L.geoJson(veganrest, {
         return L.marker(latlng, { icon: logo_vegrest, title: "Vegan options" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties.phone) + "<br>" + "<br>" +
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" +
+                        formatProperty("Indoor seating", feature.properties.indoor_seating) + "<br>" +
+                        formatProperty("Outdoor seating", feature.properties.outdoor_seating));
 
         layer.on({
             mouseover: highlightFeature,
@@ -181,7 +232,31 @@ var vegonly = L.geoJson(vegonly, {
         return L.marker(latlng, { icon: logo_vegonly, title: "Only meatless options" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties.phone) + "<br>" + "<br>" +
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" +
+                        formatProperty("Indoor seating", feature.properties.indoor_seating) + "<br>" +
+                        formatProperty("Outdoor seating", feature.properties.outdoor_seating));
 
         layer.on({
             mouseover: highlightFeature,
@@ -203,7 +278,31 @@ var vegancafe = L.geoJson(vegancafe, {
         return L.marker(latlng, { icon: logo_vegancafe, title: "Vegan options" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties.phone) + "<br>" + "<br>" +
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" +
+                        formatProperty("Indoor seating", feature.properties.indoor_seating) + "<br>" +
+                        formatProperty("Outdoor seating", feature.properties.outdoor_seating));
 
         layer.on({
             mouseover: highlightFeature,
