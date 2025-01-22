@@ -1,0 +1,255 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2024-12-23T16:07:45Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/441382592",
+        "addr:city": "Salzburg",
+        "addr:country": "AT",
+        "addr:housenumber": "1",
+        "addr:postcode": "5020",
+        "addr:street": "Südtiroler Platz",
+        "amenity": "fast_food",
+        "brand": "Burger King",
+        "brand:wikidata": "Q177054",
+        "brand:wikipedia": "en:Burger King",
+        "check_date:opening_hours": "2024-05-27",
+        "contact:facebook": "https://www.facebook.com/BurgerKing.Oesterreich",
+        "contact:instagram": "https://www.instagram.com/burgerkingaustria/",
+        "contact:phone": "+43 662 878658",
+        "contact:website": "http://www.burgerking.at/",
+        "cuisine": "burger",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Burger King",
+        "opening_hours": "Mo-Su 10:00-22:00",
+        "operator": "MFAT AdFund",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "takeaway": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0453093,
+          47.8134893
+        ]
+      },
+      "id": "node/441382592"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/441382595",
+        "addr:city": "Salzburg",
+        "addr:housenumber": "13",
+        "addr:postcode": "5020",
+        "addr:street": "Südtiroler Platz",
+        "amenity": "fast_food",
+        "brand": "McDonald's",
+        "brand:wikidata": "Q38076",
+        "brand:wikipedia": "en:McDonald's",
+        "check_date:opening_hours": "2023-08-02",
+        "cuisine": "burger",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "McDonald's",
+        "opening_hours": "Mo-Fr 00:00-01:00,05:30-24:00; Sa-Su 00:00-03:00,05:30-24:00; Jan 02,Jan 07,May 02,Aug 16,Oct 27,Nov 02,Dec 09,Dec 26,Dec 27 00:00-01:00,05:30-24:00",
+        "opening_hours:url": "https://www.mcdonalds.at/restaurant/suedtiroler-platz-13-forum-1-a-5020-salzburg",
+        "operator": "MK Gastro S2 GmbH & Co. KG",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets:wheelchair": "no",
+        "website": "https://www.mcdonalds.at/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0446867,
+          47.8138254
+        ]
+      },
+      "id": "node/441382595"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3726310304",
+        "addr:city": "Salzburg",
+        "addr:country": "AT",
+        "addr:housenumber": "54",
+        "addr:postcode": "5020",
+        "addr:street": "Linzer Gasse",
+        "amenity": "fast_food",
+        "cuisine": "burger",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "name": "BioBurgerMeister",
+        "opening_hours": "Mo-Su 11:00-22:00",
+        "organic": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+43 662 265101",
+        "takeaway": "yes",
+        "website": "https://www.bioburgermeister.com/",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0477399,
+          47.803924
+        ]
+      },
+      "id": "node/3726310304"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5743176723",
+        "addr:city": "Salzburg",
+        "addr:housenumber": "14",
+        "addr:postcode": "5020",
+        "addr:street": "Linzer Gasse",
+        "amenity": "fast_food",
+        "cuisine": "sausage",
+        "diet:vegan": "yes",
+        "name": "Kapuziner Imbiss",
+        "outdoor_seating": "yes",
+        "takeaway": "yes",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0458273,
+          47.802389
+        ]
+      },
+      "id": "node/5743176723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6022917278",
+        "amenity": "fast_food",
+        "brand": "Subway",
+        "brand:wikidata": "Q244457",
+        "brand:wikipedia": "en:Subway (restaurant)",
+        "cuisine": "sandwich",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Subway",
+        "outdoor_seating": "no",
+        "takeaway": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0426074,
+          47.8105758
+        ]
+      },
+      "id": "node/6022917278"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6290460311",
+        "amenity": "fast_food",
+        "cuisine": "thai",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "name": "Donna's Thaiküche",
+        "opening_hours": "Mo-Fr 11:00-19:30; Su 12:00-19:30; Su off"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0458845,
+          47.8070984
+        ]
+      },
+      "id": "node/6290460311"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7846407677",
+        "addr:city": "Salzburg",
+        "addr:housenumber": "3",
+        "addr:postcode": "5020",
+        "addr:street": "Makartplatz",
+        "amenity": "fast_food",
+        "brand": "dean&david",
+        "brand:wikidata": "Q66132404",
+        "cuisine": "sandwich",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "dean&david",
+        "opening_hours": "PH,Mo-Su 11:00-20:00",
+        "outdoor_seating": "yes",
+        "phone": "+43 67763442838",
+        "takeaway": "yes",
+        "website": "https://deananddavid.com/en/salzburg-makartplatz/",
+        "website:menu": "https://deananddavid.com/en/food-and-drinks/",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0433046,
+          47.8031707
+        ]
+      },
+      "id": "node/7846407677"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9881067276",
+        "addr:city": "Salzburg",
+        "addr:housenumber": "13",
+        "addr:postcode": "5020",
+        "addr:street": "Südtiroler Platz",
+        "alt_name": "Dunkin' Donuts",
+        "amenity": "fast_food",
+        "brand": "Dunkin'",
+        "brand:wikidata": "Q847743",
+        "cuisine": "donut;coffee_shop",
+        "diet:vegan": "yes",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Dunkin'",
+        "opening_hours": "Mo-Fr 08:00-19:00, Sa 08:00-18:00",
+        "outdoor_seating": "no",
+        "takeaway": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.0449158,
+          47.8140047
+        ]
+      },
+      "id": "node/9881067276"
+    }
+  ]
+}
