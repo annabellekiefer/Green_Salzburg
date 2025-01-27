@@ -3,7 +3,8 @@
     position: fixed;
     top: 10px;
     right: 20px;
-    width: 500px;  /* Feste Breite auf dem Desktop */
+    width: 90%;  /* Dynamische Breite als Prozentwert */
+    max-width: 500px;  /* Maximale Breite, damit es nicht zu groß wird */
     background-color: #eef2ea;
     z-index: 1000;
     text-align: left;
@@ -72,34 +73,6 @@
     }
 }
 
-@media (max-width: 768px) {
-    /* Reduziere die Popup-Breite */
-    .leaflet-popup {
-        max-width: 80%;  /* Setzt die maximale Breite auf 80% der Bildschirmbreite */
-        font-size: 0.8em;  /* Kleinere Schriftgröße für den Popup-Inhalt */
-    }
-
-    /* Reduziere die Größe des Popups weiter für noch kleinere Bildschirme */
-    .leaflet-popup-content-wrapper {
-        padding: 8px;  /* Weniger Innenabstand */
-    }
-
-    .leaflet-popup-content {
-        font-size: 0.8em;  /* Noch kleinere Schriftgröße */
-    }
-
-    /* Anpassung des Pfeils, der vom Popup ausgeht */
-    .leaflet-popup-tip {
-        width: 12px;  /* Verkleinert den Popup-Pfeil */
-        height: 12px;
-    }
-
-    /* Für Popups mit vielen Inhalten, maximiere die Höhe und ermögliche Scrollen */
-    .leaflet-popup-content-wrapper {
-        max-height: 300px;  /* Begrenze die Höhe des Popups */
-        overflow-y: auto;  /* Ermöglicht das Scrollen innerhalb des Popups */
-    }
-}
 
 
 body{
