@@ -36,7 +36,7 @@
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
 @media (max-width: 768px) {
     #header-container {
-        width: 70%;  /* Reduziere die Breite */
+        width: 60%;  /* Reduziere die Breite */
         top: 10px;  /* Reduziere den Abstand vom oberen Rand */
         right: 10px;  /* Reduziere den Abstand vom rechten Rand */
         font-size: 0.8em;  /* Kleinere Schriftgröße für mobile Geräte */
@@ -58,7 +58,7 @@
 @media (max-width: 768px) {
     .leaflet-control-layers {
         font-size: 9px;  /* Kleinere Schrift für Layer Control */
-        width: 160px;  /* Verkleinerte Breite */
+        width: 220px;  /* Verkleinerte Breite */
     }
 
     .leaflet-control-layers-toggle {
@@ -66,6 +66,10 @@
         padding: 8px;  /* Weniger Polsterung */
     }
 
+    .leaflet-control-layers {
+        max-height: 300px;  /* Maximalhöhe für Layer Control */
+        overflow-y: auto;  /* Ermöglicht Scrollen, falls zu viele Layer */
+    }
 }
 
 
