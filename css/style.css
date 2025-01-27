@@ -1,11 +1,10 @@
-/* Standard (Desktop) */
 #header-container {
     position: fixed;
-    top: 20px;
+    top: 10px;
     right: 20px;
-    width: 90%;  /* Dynamische Breite als Prozentwert */
-    max-width: 500px;  /* Maximale Breite, damit es nicht zu groß wird */
+    width: 500px;  /* Feste Breite auf dem Desktop */
     background-color: #eef2ea;
+    z-index: 1000;
     text-align: left;
     padding: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
