@@ -36,7 +36,7 @@
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
 @media (max-width: 768px) {
     #header-container {
-        width: 70%;  /* Reduziere die Breite */
+        width: 65%;  /* Reduziere die Breite */
         top: 10px;  /* Reduziere den Abstand vom oberen Rand */
         right: 10px;  /* Reduziere den Abstand vom rechten Rand */
         font-size: 0.8em;  /* Kleinere Schriftgröße für mobile Geräte */
@@ -96,7 +96,7 @@
 
     /* Für Popups mit vielen Inhalten, maximiere die Höhe und ermögliche Scrollen */
     .leaflet-popup-content-wrapper {
-        max-height: 400px;  /* Begrenze die Höhe des Popups */
+        max-height: 300px;  /* Begrenze die Höhe des Popups */
         overflow-y: auto;  /* Ermöglicht das Scrollen innerhalb des Popups */
     }
 }
