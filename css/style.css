@@ -36,7 +36,7 @@
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
 @media (max-width: 768px) {
     #header-container {
-        width: 50%;  /* Reduziere die Breite */
+        width: 70%;  /* Reduziere die Breite */
         top: 10px;  /* Reduziere den Abstand vom oberen Rand */
         right: 10px;  /* Reduziere den Abstand vom rechten Rand */
         font-size: 0.8em;  /* Kleinere Schriftgröße für mobile Geräte */
@@ -45,24 +45,24 @@
 
     /* Verkleinerte Überschrift auf mobilen Geräten */
     #header-container h1 {
-        font-size: 1.2em;
+        font-size: 1em;
     }
 
     /* Einleitungstext kleiner auf mobilen Geräten */
     #header-container .intro-text {
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
 }
 
 /* Anpassung der Layer Control auf mobilen Geräten */
 @media (max-width: 768px) {
     .leaflet-control-layers {
-        font-size: 1em;  /* Kleinere Schrift für Layer Control */
+        font-size: 9px;  /* Kleinere Schrift für Layer Control */
         width: 160px;  /* Verkleinerte Breite */
     }
 
     .leaflet-control-layers-toggle {
-        font-size: 1em;
+        font-size: 9px;
         padding: 8px;  /* Weniger Polsterung */
     }
 
