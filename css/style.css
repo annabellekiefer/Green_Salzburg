@@ -1,16 +1,40 @@
-h1 {
-    position: fixed; /* Fixierte Position, bleibt bei Scrollen sichtbar */
-    color: #649b6d; /* Textfarbe */
-    background-color: #e6ebe2; /* Hintergrundfarbe */
-    z-index: 2; /* Überschrift bleibt über anderen Elementen */
-    font-size: 2em; /* Schriftgröße, anpassbar */
-    padding: 10px; /* Innenabstand */
-    text-align: center; /* Textzentrierung */
-
-    top: 0; /* Ganz oben auf der Seite */
-    left: 50%; /* Horizontal zentriert */
-    transform: translateX(-50%); /* Verschiebt das Element um die Hälfte seiner Breite nach links */
+/* Container für die Überschrift und den Einleitungstext */
+#header-container {
+    position: fixed; /* Fixierte Position wie bei der Layer-Control */
+    top: 20px; /* Abstand vom oberen Rand */
+    right: 30px; /* Gleicher Abstand wie die Layer-Control */
+    width: 500px; /* Feste Breite, angepasst an die Layer-Control */
+    background-color: #eef2ea; /* Gleicher Hintergrund wie bisher */
+    z-index: 1000; /* Bleibt sichtbar über anderen Elementen */
+    text-align: left; /* Text linksbündig */
+    padding: 10px; /* Innenabstand für bessere Lesbarkeit */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatten für visuelle Trennung */
+    border-radius: 8px; /* Abgerundete Ecken */
+    font-size: 0.9em; /* Kleinere Schriftgröße passend zur Layer-Control */
+    line-height: 1.4; /* Zeilenhöhe für bessere Lesbarkeit */
+    overflow: hidden; /* Kein Überlaufen des Inhalts */
+    border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;;
 }
+
+/* Styling für die Überschrift */
+#header-container h1 {
+    color: #649b6d; /* Grünton */
+    font-size: 2.15em; /* Angepasste Schriftgröße */
+    margin: 0; /* Kein zusätzlicher Außenabstand */
+    padding-bottom: 5px; /* Abstand zur Einleitung */
+}
+
+/* Styling für den Einleitungstext */
+#header-container .intro-text {
+    color: #006d12; /* Dunklerer Grünton */
+    font-size: 1em; /* Schriftgröße angepasst an die Layer-Control */
+    margin: 0; /* Kein Außenabstand */
+    line-height: 1.4; /* Angenehmer Zeilenabstand */
+    text-align:justify;
+}
+
+
 
 
 body{
@@ -18,6 +42,7 @@ body{
 	height: 100%;
 	margin: 5px;
 	font-family: "Helvetica Neue", Arial, Helveticam sans-serif;
+    background-color: #eef2ea; 
 }
 
 #map {
@@ -28,4 +53,5 @@ body{
 	position:fixed;
 	border:1px #649b6d solid;
 }
+
 

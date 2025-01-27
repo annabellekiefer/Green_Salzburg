@@ -46,7 +46,7 @@ L.control.scale({position:'bottomright',imperial:false}).addTo(map);
 
 //Marker
 
-var iconSize = [38, 38];
+var iconSize = [40, 40];
 
 //1.Restaurants & Cafes
 //1.1 Vegan restaurants	
@@ -71,12 +71,17 @@ var logo_vegonly = L.icon({
 });
 
 //2. Shopping
-//2.1 Marketplaces & Organic stores
+//2.1 Organic stores
 var logo_shopping = L.icon({
 iconUrl: 'css/images/logo_shopping.png',
 iconSize: iconSize
 });
-//2.2 Second hand stores
+//2.2 Marketplace
+var logo_market = L.icon({
+    iconUrl: 'css/images/logo_market.png',
+    iconSize: iconSize
+    });
+//2.3 Second hand stores
 var logo_secondhand = L.icon({
 iconUrl: 'css/images/logo_secondhand.png',
 iconSize: iconSize
@@ -126,6 +131,7 @@ function zoomToFeature(e) {
 
 
 //
+
 //---- Part 4: adding features (polygons) from the geojson file 
 //
 
@@ -135,7 +141,7 @@ function zoomToFeature(e) {
 
 var vegrest = L.geoJson(vegrest, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_vegerest, title: "Vegetarian options" });
+        return L.marker(latlng, { icon: logo_vegerest, title: "Vegetarian-friendly Restaurant" });
     },
     onEachFeature: function (feature, layer) {
         // Hilfsfunktion zur Formatierung der gesamten Zeile (Label + Wert)
@@ -183,7 +189,7 @@ vegrest.addTo(map);
 //1.2 Vegan restaurants
 var veganrest = L.geoJson(veganrest, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_vegrest, title: "Vegan options" });
+        return L.marker(latlng, { icon: logo_vegrest, title: "Vegan-friendly Restaurant" });
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
@@ -229,7 +235,7 @@ veganrest.addTo(map);
 
 var vegonly = L.geoJson(vegonly, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_vegonly, title: "Only meatless options" });
+        return L.marker(latlng, { icon: logo_vegonly, title: "Meat-free Restaurant" });
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
@@ -275,7 +281,7 @@ vegonly.addTo(map);
 
 var vegancafe = L.geoJson(vegancafe, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_vegancafe, title: "Vegan options" });
+        return L.marker(latlng, { icon: logo_vegancafe, title: "Vegan-friendly Café" });
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
@@ -318,33 +324,36 @@ var vegancafe = L.geoJson(vegancafe, {
 vegancafe.addTo(map);
 
 //2. Shopping
-//2.1 Marketplaces & organic stores
-var marketplace = L.geoJson(marketplace, {
-    pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_shopping, title: "Marketplace" });
-    },
-    onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
-
-        layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: function (e) {
-                zoomToFeature(e);
-                layer.openPopup();
-            }
-        });
-    }
-});
-
-marketplace.addTo(map);
-
+//2.1 Organic stores
 var organicstore = L.geoJson(organicstore, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_shopping, title: "Organic store" });
+        return L.marker(latlng, { icon: logo_shopping, title: "Organic Store" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties.phone) + "<br>"+
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair));
+
 
         layer.on({
             mouseover: highlightFeature,
@@ -359,13 +368,77 @@ var organicstore = L.geoJson(organicstore, {
 
 organicstore.addTo(map);
 
+//2.1 Marketplace
+var marketplace = L.geoJson(marketplace, {
+    pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: logo_market, title: "Local Market" });
+    },
+    onEachFeature: function (feature, layer) {
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+            formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+            formatProperty("Operator", feature.properties.operator) + "<br>" +
+            websiteLabel + ": " + websiteDisplay + "<br>" +
+            formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" );
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: function (e) {
+                zoomToFeature(e);
+                layer.openPopup();
+            }
+        });
+    }
+});
+
+marketplace.addTo(map);
+
 //2.2 Second hand store
 var secondhand = L.geoJson(secondhand, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_secondhand, title: "Second hand store" });
+        return L.marker(latlng, { icon: logo_secondhand, title: "Second-hand shop" });
     },
     onEachFeature: function (feature, layer) {
-        layer.bindPopup('Name: ' + feature.properties.name);
+        function formatProperty(label, value) {
+            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            if (value === undefined || value === "no" || value === "") {
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+            } else {
+                return label + ": " + value;  // Normaler Text
+            }
+        }
+
+        // Webseite Formatierung
+        var websiteDisplay = feature.properties.website ? 
+            "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
+            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+
+        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
+
+        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
+                        formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
+                        websiteLabel + ": " + websiteDisplay + "<br>" +
+                        formatProperty("Phone number", feature.properties["contact:phone"]) + "<br>" +
+                        formatProperty("Wheelchair friendly", feature.properties.wheelchair) + "<br>" );
 
         layer.on({
             mouseover: highlightFeature,
@@ -383,10 +456,10 @@ secondhand.addTo(map);
 // 3. Recycling
 var recycling = L.geoJson(recycling, {
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: logo_recycle, title: "Recycling station" });
+        return L.marker(latlng, { icon: logo_recycle, title: "Recycling Station" });
     },
     onEachFeature: function (feature, layer) {
-        let popupContent = "";
+        let popupContent = "<b>Recycling station</b><br><br>"; // Überschrift und Absatz
         const recyclingOptions = ["recycling:paper", "recycling:glass", "recycling:glass_bottles", "recycling:clothes"];
 
         recyclingOptions.forEach(option => {
@@ -395,11 +468,11 @@ var recycling = L.geoJson(recycling, {
             const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1); // Erster Buchstabe groß
 
             if (value === "yes") {
-                popupContent += `<b>${formattedLabel}:</b> <b>Yes</b><br>`; // Fettgedrucktes Label und Wert
+                popupContent += `<b>${formattedLabel}: Yes</b><br>`; // Normaler Text für "yes"
             } else if (value === "no") {
-                popupContent += `${formattedLabel}: No<br>`; // Normales Label und Wert
+                popupContent += `<i>${formattedLabel}: No</i><br>`; // Kursiver Text für "no"
             } else {
-                popupContent += `${formattedLabel}: Undefined<br>`; // Normales Label und Wert
+                popupContent += `<i>${formattedLabel}: Undefined</i><br>`; // Normaler Text für undefinierte Werte
             }
         });
 
@@ -426,19 +499,19 @@ recycling.addTo(map);
 
 //the variable features lists layers that I want to control with the layer control
 var groupedOverlays = {
-    "Restaurants & Cafes": {
-        "<img src='css/images/logo_vegerest.png' width='23' height='23'> Restaurants with vegetarian options": vegrest,
-        "<img src='css/images/logo_vegrest.png' width='23' height='23'> Restaurants with vegan options": veganrest,
-        "<img src='css/images/logo_vegonly.png' width='23' height='23'> Restaurants 100% meatless": vegonly,
-        "<img src='css/images/logo_vegcafe.png' width='23' height='23'> Vegan cafes": vegancafe
+    "Restaurants & Cafés": {
+        "<img src='css/images/logo_vegerest.png' width='23' height='23'> Vegetarian-friendly Restaurants": vegrest,
+        "<img src='css/images/logo_vegrest.png' width='23' height='23'> Vegan-friendly Restaurants": veganrest,
+        "<img src='css/images/logo_vegonly.png' width='23' height='23'> Meat-free Restaurants": vegonly,
+        "<img src='css/images/logo_vegcafe.png' width='23' height='23'> Vegan-friendly Cafés": vegancafe
     },
     "Shopping": {
-        "<img src='css/images/logo_shopping.png' width='23' height='23'> Marketplaces": marketplace,
-        "<img src='css/images/logo_shopping.png' width='23' height='23'> Organic stores": organicstore,
-        "<img src='css/images/logo_secondhand.png' width='23' height='23'> Second hand stores": secondhand
+        "<img src='css/images/logo_market.png' width='23' height='23'> Local Markets": marketplace,
+        "<img src='css/images/logo_shopping.png' width='23' height='23'> Organic Stores": organicstore,
+        "<img src='css/images/logo_secondhand.png' width='23' height='23'> Second-hand Shops": secondhand
     },
     "Recycling": {
-        "<img src='css/images/logo_recycle1.png' width='23' height='23'> Recycling station": recycling
+        "<img src='css/images/logo_recycle1.png' width='23' height='23'> Recycling Stations": recycling
     }
 };
 
