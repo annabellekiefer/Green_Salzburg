@@ -36,7 +36,7 @@
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
 @media (max-width: 768px) {
     #header-container {
-        width: 60%;  /* Reduziere die Breite */
+        width: 75%;  /* Reduziere die Breite */
         top: 10px;  /* Reduziere den Abstand vom oberen Rand */
         right: 10px;  /* Reduziere den Abstand vom rechten Rand */
         font-size: 0.8em;  /* Kleinere Schriftgröße für mobile Geräte */
@@ -57,12 +57,12 @@
 /* Anpassung der Layer Control auf mobilen Geräten */
 @media (max-width: 768px) {
     .leaflet-control-layers {
-        font-size: 9px;  /* Kleinere Schrift für Layer Control */
+        font-size: 6px;  /* Kleinere Schrift für Layer Control */
         width: 220px;  /* Verkleinerte Breite */
     }
 
     .leaflet-control-layers-toggle {
-        font-size: 9px;
+        font-size: 6px;
         padding: 8px;  /* Weniger Polsterung */
     }
 
@@ -72,7 +72,34 @@
     }
 }
 
+@media (max-width: 768px) {
+    /* Reduziere die Popup-Breite */
+    .leaflet-popup {
+        max-width: 80%;  /* Setzt die maximale Breite auf 80% der Bildschirmbreite */
+        font-size: 0.8em;  /* Kleinere Schriftgröße für den Popup-Inhalt */
+    }
 
+    /* Reduziere die Größe des Popups weiter für noch kleinere Bildschirme */
+    .leaflet-popup-content-wrapper {
+        padding: 8px;  /* Weniger Innenabstand */
+    }
+
+    .leaflet-popup-content {
+        font-size: 0.8em;  /* Noch kleinere Schriftgröße */
+    }
+
+    /* Anpassung des Pfeils, der vom Popup ausgeht */
+    .leaflet-popup-tip {
+        width: 6px;  /* Verkleinert den Popup-Pfeil */
+        height: 6px;
+    }
+
+    /* Für Popups mit vielen Inhalten, maximiere die Höhe und ermögliche Scrollen */
+    .leaflet-popup-content-wrapper {
+        max-height: 300px;  /* Begrenze die Höhe des Popups */
+        overflow-y: auto;  /* Ermöglicht das Scrollen innerhalb des Popups */
+    }
+}
 
 
 body{
