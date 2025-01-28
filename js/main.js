@@ -518,14 +518,21 @@ var groupedOverlays = {
 var options = {
     groupCheckboxes: true,  // Checkboxen für Gruppen erlauben
     position: 'bottomright', // Position der Kontrolle
-    collapsed: false        // Standardmäßig nicht eingeklappt
+    collapsed: window.innerWidth <= 768 // Standardmäßig eingeklappt auf kleinen Bildschirmen (Handys)
 };
 
 // Erstelle die grouped Layers-Control mit angepassten Optionen
 var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
 map.addControl(layerControl);
 
-
+// Wenn das Fenster resized wird, die Layer-Control anpassen
+window.addEventListener('resize', function () {
+    if (window.innerWidth <= 768) {
+        layerControl._collapse(); // Layer Control zuklappen, wenn das Fenster kleiner als 768px ist
+    } else {
+        layerControl._expand(); // Layer Control aufklappen, wenn das Fenster größer als 768px ist
+    }
+});
 
 
 
