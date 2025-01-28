@@ -49,7 +49,7 @@
 
     /* Verkleinerte Überschrift auf mobilen Geräten */
     #header-container h1 {
-        font-size: 0.8em;
+        font-size: 1em;
     }
 
     /* Einleitungstext kleiner auf mobilen Geräten */
@@ -61,8 +61,8 @@
 /* Anpassung der Layer Control auf mobilen Geräten */
 @media (max-width: 768px) {
     .leaflet-control-layers {
-        font-size: 6px;  /* Kleinere Schrift für Layer Control */
-        width: 140px;  /* Verkleinerte Breite */
+        font-size: 8px;  /* Kleinere Schrift für Layer Control */
+        width: 170px;  /* Verkleinerte Breite */
     }
 
     .leaflet-control-layers-toggle {
