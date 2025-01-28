@@ -76,20 +76,27 @@
     }
 }
 
-/* Anpassung der Popups auf mobilen Geräten */
-/* Popups auf mobilen Geräten */
 @media (max-width: 768px) {
     .leaflet-popup {
-        max-width: 90%; /* Nutze fast die gesamte Breite */
-        font-size: 0.9em; /* Kleinere, aber lesbare Schriftgröße */
+        display: block;
+        max-width: 90%; /* Popup nutzt fast die gesamte Breite */
+        font-size: 0.9em; /* Kleinere Schriftgröße für Mobilgeräte */
     }
     .leaflet-popup-content-wrapper {
-        max-height: auto; /* Keine feste Höhe */
-        overflow-y: auto; /* Scrollen bei Bedarf */
+        max-height: 50vh; /* Begrenzung auf halbe Bildschirmhöhe */
+        overflow-y: auto; /* Ermöglicht Scrollen */
+        padding: 12px;
+        border-radius: 8px;
     }
     .leaflet-popup-tip {
-        width: auto; /* Standardgröße beibehalten */
-        height: auto;
+        width: 8px; /* Reduzierte Breite des Pfeils */
+        height: 8px; /* Reduzierte Höhe des Pfeils */
+        margin: 0 auto; /* Zentrierung unter dem Popup */
+        background: inherit; /* Gleiche Farbe wie der Popup-Hintergrund */
+    }
+    .leaflet-popup-content {
+        margin: 0;
+        line-height: 1.4;
     }
 }
 
