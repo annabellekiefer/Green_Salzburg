@@ -1,9 +1,10 @@
 #header-container {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 25px;
     width: 500px;  /* Feste Breite auf dem Desktop */
     background-color: #eef2ea;
+    z-index: 1000;
     text-align: left;
     padding: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -31,6 +32,11 @@
     text-align: justify;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    #header-container {
+        width: 650px; /* Breitere Ansicht für iPads */
+    }
+}
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
 @media (max-width: 768px) {
     #header-container {
@@ -84,6 +90,10 @@
     .leaflet-popup-content {
         font-size: 0.8em; /* Verkleinert die Schriftgröße im Popup */
         line-height: 1.4; /* Zeilenhöhe anpassen für bessere Lesbarkeit */
+    }
+    .leaflet-popup-tip {
+        width: 12px; /* Reduziert die Größe des Pfeils */
+        height: 12px;
     }
 }
 
