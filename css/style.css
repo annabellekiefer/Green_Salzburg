@@ -34,7 +34,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     #header-container {
-        width: 650px; /* Breitere Ansicht für iPads */
+        width: 800px; /* Breitere Ansicht für iPads */
     }
 }
 /* Anpassung für kleine Bildschirme (Handy oder Tablet) */
@@ -77,23 +77,19 @@
 }
 
 /* Anpassung der Popups auf mobilen Geräten */
+/* Popups auf mobilen Geräten */
 @media (max-width: 768px) {
     .leaflet-popup {
-        max-width: 80%; /* Reduziert die maximale Breite des Popups */
-        font-size: 0.8em; /* Kleinere Schriftgröße für bessere Lesbarkeit */
-        padding: 10px;  /* Reduziert den Abstand im Popup */
+        max-width: 90%; /* Nutze fast die gesamte Breite */
+        font-size: 0.9em; /* Kleinere, aber lesbare Schriftgröße */
     }
     .leaflet-popup-content-wrapper {
-        max-height: 300px; /* Begrenze die maximale Höhe des Popups */
-        overflow-y: auto; /* Ermöglicht das Scrollen im Popup, wenn der Inhalt zu groß ist */
-    }
-    .leaflet-popup-content {
-        font-size: 0.8em; /* Verkleinert die Schriftgröße im Popup */
-        line-height: 1.4; /* Zeilenhöhe anpassen für bessere Lesbarkeit */
+        max-height: auto; /* Keine feste Höhe */
+        overflow-y: auto; /* Scrollen bei Bedarf */
     }
     .leaflet-popup-tip {
-        width: 12px; /* Reduziert die Größe des Pfeils */
-        height: 12px;
+        width: auto; /* Standardgröße beibehalten */
+        height: auto;
     }
 }
 
