@@ -2,7 +2,7 @@
     position: fixed;
     top: 15px;
     right: 25px;
-    width: 500px;  /* Feste Breite auf dem Desktop */
+    width: 500px;  /* Fixed width on the desktop */
     background-color: #eef2ea;
     z-index: 1000;
     text-align: left;
@@ -15,7 +15,7 @@
     border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
-/* Styling für die Überschrift */
+/* Styling for the headline */
 #header-container h1 {
     color: #649b6d;
     font-size: 2.15em;
@@ -23,7 +23,7 @@
     padding-bottom: 5px;
 }
 
-/* Styling für den Einleitungstext */
+/* Styling for the introductory text */
 #header-container .intro-text {
     color: #006d12;
     font-size: 1em;
@@ -32,68 +32,74 @@
     text-align: justify;
 }
 
+/* Media queries were used here to make the website layout responsive and adapt it to different screen sizes. 
+   They adjust specific styles for tablets and mobile devices. For example, on screens smaller than 768px, 
+   the header container's width is reduced, and font sizes are adjusted for better readability on mobile devices. 
+   Additionally, the layer control and pop-up sizes are optimized for smaller screens, ensuring smooth user 
+   interaction and a better viewing experience on various devices. */
+   
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     #header-container {
-        width: 800px; /* Breitere Ansicht für iPads */
+        width: 800px; /* Wider view for iPads */
     }
 }
-/* Anpassung für kleine Bildschirme (Handy oder Tablet) */
+/* Adaptation for small screens */
 @media (max-width: 768px) {
     #header-container {
-        width: 75%;  /* Reduziere die Breite */
-        top: 10px;  /* Reduziere den Abstand vom oberen Rand */
-        right: 10px;  /* Reduziere den Abstand vom rechten Rand */
-        font-size: 0.8em;  /* Kleinere Schriftgröße für mobile Geräte */
-        padding: 6px;  /* Etwas mehr Innenabstand */
+        width: 75%;  /* Reduce the width */
+        top: 10px;  /* Reduce the distance from the top edge */
+        right: 10px;  /* Reduce the distance from the right edge */
+        font-size: 0.8em;  /* Smaller font size for mobile devices */
+        padding: 6px; 
     }
 
-    /* Verkleinerte Überschrift auf mobilen Geräten */
+    /* Reduced headline on mobile devices */
     #header-container h1 {
         font-size: 1em;
     }
 
-    /* Einleitungstext kleiner auf mobilen Geräten */
+    /* Introduction text smaller on mobile devices */
     #header-container .intro-text {
         font-size: 0.8em;
     }
 }
 
-/* Anpassung der Layer Control auf mobilen Geräten */
+/* Customization of layer control on mobile devices */
 @media (max-width: 768px) {
     .leaflet-control-layers {
-        font-size: 8px;  /* Kleinere Schrift für Layer Control */
-        width: 170px;  /* Verkleinerte Breite */
+        font-size: 8px;  /* Smaller font for Layer Control */
+        width: 170px;  /* Reduced width */
     }
 
     .leaflet-control-layers-toggle {
         font-size: 6px;
-        padding: 6px;  /* Weniger Polsterung */
+        padding: 6px;  
     }
 
     .leaflet-control-layers {
-        max-height: 400px;  /* Maximalhöhe für Layer Control */
-        overflow-y: auto;  /* Ermöglicht Scrollen, falls zu viele Layer */
+        max-height: 400px;  /* Maximum height for layer control */
+        overflow-y: auto;  /* Enables scrolling if there are too many layers */
     }
 }
 
-/* Anpassung der Popups auf mobilen Geräten */
-/* Popups auf mobilen Geräten */
+/* Customization of pop-ups on mobile devices */
+/* Pop-ups on mobile devices */
 @media (max-width: 768px) {
     .leaflet-popup {
-        max-width: 300px; /* Nutze fast die gesamte Breite */
-        font-size: 0.8em; /* Kleinere, aber lesbare Schriftgröße */
+        max-width: 300px; /* Use almost the entire width */
+        font-size: 0.8em; 
     }
     .leaflet-popup-content-wrapper {
-        max-height: 400px; /* Keine feste Höhe */
-        overflow-y: auto; /* Scrollen bei Bedarf */
+        max-height: 400px; 
+        overflow-y: auto; 
         padding: 6px;
     }
     .leaflet-popup-tip {
-        width: auto; /* Standardgröße beibehalten */
+        width: auto; /* Retain standard size */
         height: auto;
     }
     .leaflet-popup-content {
-        margin: 0; /* Standardwert von Leaflet */
+        margin: 0; 
     }
 }
 

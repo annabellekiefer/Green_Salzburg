@@ -1,21 +1,26 @@
-// Using Leaflet for creating the map and adding controls for interacting with the map
+// Using Leaflet to create an interactive web map showing sustainable ways of living and eating in Salzburg
+
+// 1. Initialize the map with a center point and zoom level &  
+//    add two base layers (CartoDB and OpenStreetMap) for users to switch between  
+// 2. Include a scale bar for reference  
+// 3. Define custom icons for different categories like restaurants, cafes, shopping, and recycling  
+// 4. Implement interaction features: icons enlarge on hover, reset on mouseout, and zoom in on click  
+// 5. Load GeoJSON data to add markers, each with a popup displaying relevant location information  
+// 6. Add a grouped layer control to toggle between base layers and manage overlays  
 
 //
-//--- Part 1: adding base maps ---
+//---- Part 1: adding base maps ----
 //
 
 //creating the map; defining the location in the center of the map (geographic coords) and the zoom level. These are properties 
 //of the leaflet map object L.map.
-//the map window has been given the id 'map' in th<e .html file
+//the map window has been given the id 'map' in the .html file
 var map = L.map('map', {
 	center: [47.8, 13.05],
 	zoom: 15
 });
 
-// alternatively the setView method could be used for placing the map in the window
-//var map = L.map('map').setView([47.5, 13.05], 8);
-
-// add open street map as base layer
+// add CartoDB_Positron & Open Street Map as base layers
 var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 	subdomains: 'abcd',
@@ -26,8 +31,6 @@ var osmap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	});
 
-
-
 // for using the two base maps in the layer control, I defined a baseMaps variable
 var baseMaps = {
 	"CartoDB_Positron": CartoDB_Positron,
@@ -35,17 +38,16 @@ var baseMaps = {
 };
 
 //
-//---- Part 2: Adding a scale bar
+//---- Part 2: Adding a scale bar ----
 //
 
 L.control.scale({position:'bottomright',imperial:false}).addTo(map);
 
-
 //
-//---- Part 3: Adding symbols ---- 
+//---- Part 3: Adding Icons ---- 
+//
 
-//Marker
-
+//Determine a uniform icon size
 var iconSize = [40, 40];
 
 //1.Restaurants & Cafes
@@ -93,16 +95,20 @@ var logo_recycle = L.icon({
     iconSize: iconSize
 });
 
+//
+//---- Part 4: Defining functions ---- 
+//
 
-//Defining functions
 //1. Highlight features
+// Enlarges the marker icon when hovered by retrieving the current icon URL 
+// and replacing it with a larger version while maintaining its position.
 function highlightFeature(e) {
     var layer = e.target;
-    var categoryIcon = e.target.options.icon.options.iconUrl; // Dynamisches Icon abrufen
+    var categoryIcon = e.target.options.icon.options.iconUrl; // Retrieve dynamic icon
 
     layer.setIcon(
         L.icon({
-            iconUrl: categoryIcon, // Gleiches Icon, aber größer
+            iconUrl: categoryIcon, // Same icon, but larger
             iconSize: [52, 52],
             iconAnchor: [26, 26],
             popupAnchor: [0, -26]
@@ -111,58 +117,61 @@ function highlightFeature(e) {
 }
 
 // 2. Reset highlights
+// Resets the marker icon to its original size after hover effect is removed.
 function resetHighlight(e) {
     var layer = e.target;
-    var categoryIcon = e.target.options.icon.options.iconUrl; // Dynamisches Icon abrufen
+    var categoryIcon = e.target.options.icon.options.iconUrl; 
 
     layer.setIcon(
         L.icon({
-            iconUrl: categoryIcon, // Zurück zum Original
+            iconUrl: categoryIcon, // Back to the original
             iconSize: [36, 36],
             iconAnchor: [18, 18],
             popupAnchor: [0, -18]
         })
     );
 }
+
 // 3. Zoom to features
+// Centers the map on the selected marker and zooms in to level 18.
 function zoomToFeature(e) {
-    map.setView(e.target.getLatLng(), 18); // Zentriert und zoomt auf den Punkt
+    map.setView(e.target.getLatLng(), 18);
 }
 
-
+//
+//---- Part 5: adding point features from the geojson files ----
 //
 
-//---- Part 4: adding features (polygons) from the geojson file 
-//
+// Creates a GeoJSON layer for defined features with custom markers.
+// Each marker displays a popup with specific details, formatted dynamically.
+// Highlights the marker on hover, resets on mouseout, and zooms in on click.
 
-//the variable districtsSBG is created in the Districts_Salzburg.js file (source file of geojson data)
 //1.Restaurants & Cafes
 //1.1 Vegetarian restaurants
-
 var vegrest = L.geoJson(vegrest, {
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, { icon: logo_vegerest, title: "Vegetarian-friendly Restaurant" });
     },
     onEachFeature: function (feature, layer) {
-        // Hilfsfunktion zur Formatierung der gesamten Zeile (Label + Wert)
+        // Help function for formatting the entire line (label + value)
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value; 
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -182,8 +191,6 @@ var vegrest = L.geoJson(vegrest, {
     }
 });
 
-
-
 vegrest.addTo(map);
 
 //1.2 Vegan restaurants
@@ -193,23 +200,23 @@ var veganrest = L.geoJson(veganrest, {
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -232,30 +239,29 @@ var veganrest = L.geoJson(veganrest, {
 veganrest.addTo(map);
 
 //1.3 Vegetarian only
-
 var vegonly = L.geoJson(vegonly, {
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, { icon: logo_vegonly, title: "Meat-free Restaurant" });
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -278,30 +284,29 @@ var vegonly = L.geoJson(vegonly, {
 vegonly.addTo(map);
 
 //1.4 Vegan cafes
-
 var vegancafe = L.geoJson(vegancafe, {
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, { icon: logo_vegancafe, title: "Vegan-friendly Café" });
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -331,23 +336,23 @@ var organicstore = L.geoJson(organicstore, {
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -375,23 +380,23 @@ var marketplace = L.geoJson(marketplace, {
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
             formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
             formatProperty("Operator", feature.properties.operator) + "<br>" +
@@ -417,23 +422,23 @@ var secondhand = L.geoJson(secondhand, {
     },
     onEachFeature: function (feature, layer) {
         function formatProperty(label, value) {
-            // Überprüfen, ob der Wert "undefined", "no" oder leer ist, und die ganze Zeile kursiv formatieren
+            // Check whether the value is “undefined”, “no” or empty and format the entire line in italics
             if (value === undefined || value === "no" || value === "") {
-                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Kursiv formatieren
+                return "<i>" + label + ": " + (value === undefined ? "undefined" : value) + "</i>";  // Format italics
             } else {
-                return label + ": " + value;  // Normaler Text
+                return label + ": " + value;  // Normal text
             }
         }
 
-        // Webseite Formatierung
+        // Website formatting
         var websiteDisplay = feature.properties.website ? 
             "<a href='" + feature.properties.website + "' target='_blank'>" + feature.properties.website + "</a>" : 
-            "<i>undefined</i>";  // Standardtext für "nicht verfügbar"
+            "<i>undefined</i>";  // Standard text for “not available”
 
-        // Wenn die Website nicht definiert ist, die gesamte Zeile kursiv formatieren
+        // If the website is not defined, format the entire line in italics
         var websiteLabel = feature.properties.website === undefined ? "<i>Website</i>" : "Website"; 
 
-        // Popup-Inhalt mit der Hilfsfunktion für alle relevanten Felder
+        // Pop-up content with the help function for all relevant fields
         layer.bindPopup("<b>" + feature.properties.name + "</b>" + "<br>" + "<br>" +
                         formatProperty("Opening hours", feature.properties.opening_hours) + "<br>" +
                         websiteLabel + ": " + websiteDisplay + "<br>" +
@@ -459,20 +464,20 @@ var recycling = L.geoJson(recycling, {
         return L.marker(latlng, { icon: logo_recycle, title: "Recycling Station" });
     },
     onEachFeature: function (feature, layer) {
-        let popupContent = "<b>Recycling station</b><br><br>"; // Überschrift und Absatz
+        let popupContent = "<b>Recycling station</b><br><br>"; // Heading and paragraph
         const recyclingOptions = ["recycling:paper", "recycling:glass", "recycling:glass_bottles", "recycling:clothes"];
 
         recyclingOptions.forEach(option => {
             const value = feature.properties[option];
-            const label = option.replace("recycling:", "").replace("_", " "); // Entfernt 'recycling:' und ersetzt '_' durch Leerzeichen
-            const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1); // Erster Buchstabe groß
+            const label = option.replace("recycling:", "").replace("_", " "); // Removes 'recycling:' and replaces '_' with spaces
+            const formattedLabel = label.charAt(0).toUpperCase() + label.slice(1); // First letter capital
 
             if (value === "yes") {
-                popupContent += `<b>${formattedLabel}: Yes</b><br>`; // Normaler Text für "yes"
+                popupContent += `<b>${formattedLabel}: Yes</b><br>`; // Normal text for “yes”
             } else if (value === "no") {
-                popupContent += `<i>${formattedLabel}: No</i><br>`; // Kursiver Text für "no"
+                popupContent += `<i>${formattedLabel}: No</i><br>`; // Italic text for “no”
             } else {
-                popupContent += `<i>${formattedLabel}: Undefined</i><br>`; // Normaler Text für undefinierte Werte
+                popupContent += `<i>${formattedLabel}: Undefined</i><br>`; // Italic text for undefined values
             }
         });
 
@@ -492,12 +497,12 @@ var recycling = L.geoJson(recycling, {
 recycling.addTo(map);
 
 //
-//---- Part 5: Adding a layer control for base maps and feature layers
+//---- Part 6: Adding a grouped layer control for base maps and feature layers ----
 //
 
-//the variable features lists layers that I want to control with the layer control
+// Creates a grouped layer control for different categories like restaurants, shopping, and recycling.  
+// Uses custom icons in labels and automatically collapses or expands the control when resizing the window.  
 
-//the variable features lists layers that I want to control with the layer control
 var groupedOverlays = {
     "Restaurants & Cafés": {
         "<img src='css/images/logo_vegerest.png' width='23' height='23'> Vegetarian-friendly Restaurants": vegrest,
@@ -516,21 +521,21 @@ var groupedOverlays = {
 };
 
 var options = {
-    groupCheckboxes: true,  // Checkboxen für Gruppen erlauben
-    position: 'bottomright', // Position der Kontrolle
-    collapsed: window.innerWidth <= 768 // Standardmäßig eingeklappt auf kleinen Bildschirmen (Handys)
+    groupCheckboxes: true,  // Allow checkboxes for groups
+    position: 'bottomright', // Control position
+    collapsed: window.innerWidth <= 768 // Folded by default on small screens (cell phones)
 };
 
-// Erstelle die grouped Layers-Control mit angepassten Optionen
+// Create the grouped layers control with customized options
 var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
 map.addControl(layerControl);
 
-// Wenn das Fenster resized wird, die Layer-Control anpassen
+// When the window is resized, adjust the layer control
 window.addEventListener('resize', function () {
     if (window.innerWidth <= 768) {
-        layerControl._collapse(); // Layer Control zuklappen, wenn das Fenster kleiner als 768px ist
+        layerControl._collapse(); // Collapse Layer Control if the window is smaller than 768px
     } else {
-        layerControl._expand(); // Layer Control aufklappen, wenn das Fenster größer als 768px ist
+        layerControl._expand(); // Expand Layer Control if the window is larger than 768px
     }
 });
 
